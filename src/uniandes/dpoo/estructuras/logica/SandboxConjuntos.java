@@ -3,6 +3,7 @@ package uniandes.dpoo.estructuras.logica;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
@@ -61,7 +62,12 @@ public class SandboxConjuntos
      */
     public String getPrimera( )
     {
-        return arbolCadenas.isEmpty() ? null : arbolCadenas.first();
+        if (arbolCadenas.isEmpty()) {
+            return null;
+        } 
+        else {
+            return arbolCadenas.first();
+        }
     }
 
     /**
@@ -72,8 +78,14 @@ public class SandboxConjuntos
      */
     public String getUltima( )
     {
-        return arbolCadenas.isEmpty() ? null : arbolCadenas.last();
+    	if (arbolCadenas.isEmpty()) {
+    		return null;
+    	} 
+    	else {
+    	    return arbolCadenas.last();
+    	}
     }
+
 
     /**
      * Retorna una colección con las cadenas que hacen parte del conjunto de cadenas y son mayores o iguales a la cadena que se recibe por parámetro
@@ -121,7 +133,14 @@ public class SandboxConjuntos
      */
     public void eliminarCadenaSinMayusculasOMinusculas( String cadena )
     {
-    	arbolCadenas.removeIf(s -> s.equalsIgnoreCase(cadena));
+    	Iterator<String> i = arbolCadenas.iterator();
+    	while (i.hasNext()) {
+    		String j = i.next();
+    		if (j.equalsIgnoreCase(cadena)) {
+    			i.remove();
+    			break;
+    		}
+    	}
     }
 
     /**
@@ -155,11 +174,11 @@ public class SandboxConjuntos
      */
     public void volverMayusculas( )
     {
-        NavigableSet<String> nuevoSet = new TreeSet<>();
-        for (String s : arbolCadenas) {
-            nuevoSet.add(s.toUpperCase());
+        NavigableSet<String> i = new TreeSet<>();
+        for (String j : arbolCadenas) {
+            i.add(j.toUpperCase());
         }
-        arbolCadenas = nuevoSet;
+        arbolCadenas = i;
     }
 
     /**
@@ -177,7 +196,12 @@ public class SandboxConjuntos
      */
     public boolean compararElementos( String[] otroArreglo )
     {
-        return arbolCadenas.containsAll(Arrays.asList(otroArreglo));
+    	for (String i: otroArreglo) {
+    		if (!(arbolCadenas.contains(i))) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
 
 }
